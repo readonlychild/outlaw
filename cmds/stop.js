@@ -8,6 +8,8 @@ const templates = require('./../templates.js');
 const stateManager = require('./../stateManager.js');
 const reactionHandler = require('./../reactionHandler.js');
 
+const nomin = require('./../nomin.js');
+
 reactionHandler.addListener('stop_page_reaction', function (reaction, user) {
   //console.log('stop_page_reaction', 'wakeup')
   var userState = stateManager.getUserState(user.id, 'stop');
@@ -95,35 +97,54 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
       }
       k += 1;
     });
-    emb.setFooter(`..${userPick}/${response.results.length} stops found.`);
-    var maptile = process.env.MAP_TILES.replace(/{lat}/g, lat).replace(/{lng}/g, lng);
-    //console.log(maptile);
-    emb.setImage(maptile);
-    
-    if (!isReaction) {
-      message.channel.send({
-        embed: emb
-      })
-      .then((msg) => {
-        if (response.results.length > 1) {
-          msg.react('⬅').catch();
-          setTimeout(() => {
-              msg.react('➡').catch();
-          }, 400);
+
+    nomin.reverse(lat, lng)
+    .then((geo) => {
+
+      var reverse = '';
+      if (geo) {
+        reverse = geo.display_name;
+        if (geo.address && geo.address.city) {
+          reverse = `**${geo.address.city}**\n` + reverse;
         }
-        // create user state for reaction-time!
-        stateManager.saveState('stop', message.author.id, {
-          userPick: userPick,
-          maxPick: response.results.length,
-          searchTerm: searchTerm,
-          message: msg
+        if (geo.address && geo.address.village) {
+          reverse = `**${geo.address.village}**\n` + reverse;
+        }
+      }
+      emb.description = emb.description.replace(/#reverse#/g, reverse);
+
+      emb.setFooter(`..${userPick}/${response.results.length} stops found.`);
+      var maptile = process.env.MAP_TILES.replace(/{lat}/g, lat).replace(/{lng}/g, lng);
+      //console.log(maptile);
+      emb.setImage(maptile);
+      
+      if (!isReaction) {
+        message.channel.send({
+          embed: emb
+        })
+        .then((msg) => {
+          if (response.results.length > 1) {
+            msg.react('⬅').catch();
+            setTimeout(() => {
+                msg.react('➡').catch();
+            }, 400);
+          }
+          // create user state for reaction-time!
+          stateManager.saveState('stop', message.author.id, {
+            userPick: userPick,
+            maxPick: response.results.length,
+            searchTerm: searchTerm,
+            message: msg
+          });
         });
-      });
-    } else {
-      // isReaction
-      var userState = stateManager.getUserState(userId, 'stop');
-      userState.message.edit({ embed: emb });
-    }
+      } else {
+        // isReaction
+        var userState = stateManager.getUserState(userId, 'stop');
+        userState.message.edit({ embed: emb });
+      }
+
+    });
+
   });
 };
 
