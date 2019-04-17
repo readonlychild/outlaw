@@ -2,13 +2,22 @@ const mysql = require('mysql');
 
 var osql = {
   _conn: false,
-  connect: function () {
-    this._conn = mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_DATABASE
-    });
+  connect: function (p) {
+    if (p === 'NEST') {
+      this._conn = mysql.createConnection({
+        host: process.env.NESTDB_HOST,
+        user: process.env.NESTDB_USER,
+        password: process.env.NESTDB_PASS,
+        database: process.env.NESTDB_DATABASE
+      });
+    } else {
+      this._conn = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_DATABASE
+      });
+    }
   },
   query: function (sql, parms, timeout) {
     var self = this;

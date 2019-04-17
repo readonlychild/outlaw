@@ -64,7 +64,7 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
     return;
   }
   console.log('poke nest', poke.name)
-  osql.connect();
+  osql.connect('NEST');
   var sql = `SELECT * from nests where pokemon_id = ? order by updated desc limit 50`
   osql.query(sql, [ poke.id ])
   .then((response) => {
