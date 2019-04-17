@@ -1,3 +1,4 @@
+#reverse#
 **Raid** (lvl #raidLevel# :#teamName#:)
 **#poke#** #type#
 Started: **#started#**

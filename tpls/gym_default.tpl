@@ -1,3 +1,4 @@
+#reverse#
 :#teamName#: | free slots: #availSlots#
 EX: #isEx#
 

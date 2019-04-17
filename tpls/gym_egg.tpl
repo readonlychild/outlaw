@@ -1,3 +1,4 @@
+#reverse#
 Egg lvl #raidLevel# :#teamName#:
 Hatches: **#started#** | EX: **#isEx#**
 
