@@ -16,8 +16,4 @@ Rename `.env.example` to `.env` and go over the variables
 
 `DB_*` database connection information.
 
-## Pokebot leverage
-
-`Pokebot_map_images_domain_and_port` Pokebot now requires map images to be accessible over public internet. Specify here the public IP or domain (and port).
-
-`Pokebot_static_images_path` Absolute or relative path to get to Pokebot static/images folder.
+`NESTDB_*` this can be the same as `DB_*` or diff if your nest data is in a separate DB.
