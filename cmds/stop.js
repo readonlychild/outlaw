@@ -50,6 +50,7 @@ exports.run = (client, message, args) => {
     return;
   }
   var searchTerm = argv._.join('');
+  searchTerm = searchTerm.replace(/ /g, '');
   var userPick = argv.p || 1;
   sendEmbed(message, message.author.id, userPick, searchTerm, false);
 };
