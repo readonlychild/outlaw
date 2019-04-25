@@ -91,7 +91,7 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
           ;
         lat = nest.lat;
         lng = nest.lng;
-        var tz_offset = -6;
+        var tz_offset = process.env.TZ_OFFSET;
 
         var desc = templates.getTemplate('nest_default'); //.stops.default;
         desc = desc.replace(/#poke-name#/g, poke.name)

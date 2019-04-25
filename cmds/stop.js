@@ -150,7 +150,7 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
 };
 
 function stopInfo (row) {
-  var tz_offset = -6;
+  var tz_offset = process.env.TZ_OFFSET;
   var info = {
     id: row.id,
     name: 'unk',

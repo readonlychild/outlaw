@@ -174,7 +174,8 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
 };
 
 function gymInfo (row) {
-  var tz_offset = -6;
+  console.log('process.env.TZ_OFFSET', process.env.TZ_OFFSET);
+  var tz_offset = process.env.TZ_OFFSET;
   var info = {
     eggSpawned: moment('2011-01-01'),
     eggHatched: moment('2011-01-01'),
