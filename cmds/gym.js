@@ -175,7 +175,7 @@ function sendEmbed (message, userId, userPick, searchTerm, isReaction) {
 
 function gymInfo (row) {
   console.log('process.env.TZ_OFFSET', process.env.TZ_OFFSET);
-  var tz_offset = process.env.TZ_OFFSET;
+  var tz_offset = parseInt(process.env.TZ_OFFSET);
   var info = {
     eggSpawned: moment('2011-01-01'),
     eggHatched: moment('2011-01-01'),
